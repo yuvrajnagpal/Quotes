@@ -16,6 +16,7 @@ class SavedQuotes : Fragment() {
 
     lateinit var quotes:ArrayList<Quotee>
     lateinit var realm: Realm
+    lateinit var adapter: Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,15 @@ class SavedQuotes : Fragment() {
         quotes= ArrayList()
 
         realm= Realm.getDefaultInstance()
+
+        val result=realm.where(Quotee::class.java).findAll()
+
+        for (quote in result){
+
+            quotes.add(quote)
+        }
+
+         adapter=Adapter(quotes)
 
 
 
@@ -34,14 +44,12 @@ class SavedQuotes : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view=inflater.inflate(R.layout.activity_saved_quotes,container,false)
-        val result=realm.where(Quotee::class.java).findAll()
-
-        for (quote in result){
-
-            quotes.add(quote)
-        }
         view.saved_recycler.layoutManager=LinearLayoutManager(context)
-       view.saved_recycler.adapter=Adapter(quotes)
+        view.saved_recycler.adapter=adapter
+
+
+
+
         return  view
     }
 }

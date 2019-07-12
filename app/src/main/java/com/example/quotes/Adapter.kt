@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.like.OnLikeListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.quote_item.view.*
 
@@ -25,6 +26,16 @@ class Adapter(val quotes:ArrayList<Quotee>?=null):RecyclerView.Adapter<Adapter.V
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
 
         p0.bindview(quotes!![p1])
+
+        p0.itemView.setOnLongClickListener(object:View.OnLongClickListener{
+           override fun onLongClick(v: View?): Boolean {
+
+               quotes.removeAt(p1)
+               notifyItemRemoved(p1)
+               return true
+           }
+
+       })
     }
 
 

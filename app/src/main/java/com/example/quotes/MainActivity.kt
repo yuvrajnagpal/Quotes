@@ -86,6 +86,7 @@ class MainActivity : Fragment() {
                 obj.image=backgroundText
                 obj.quote=quoteText
                 realm.commitTransaction()
+                Adapter().notifyDataSetChanged()
 
             }
 
